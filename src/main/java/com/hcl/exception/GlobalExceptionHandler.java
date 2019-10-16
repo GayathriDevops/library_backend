@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(InvalidCredentialsException.class)
 	public ResponseEntity<ResponseDto> EmployeeNotFoundExceptionExceptionHandler(InvalidCredentialsException ex,
 			WebRequest request) {
-		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.FOUND.value())
+		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.UNAUTHORIZED.value())
 				.build();
 		return new ResponseEntity<>(responseDto, HttpStatus.UNAUTHORIZED);
 
