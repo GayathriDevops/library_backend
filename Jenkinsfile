@@ -5,7 +5,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                git url : 'https://github.com/GayathriDevops/library_backend.git, dev'
+                git url : 'https://github.com/GayathriDevops/library_backend.git'
+                when {
+                branch 'master'
+                }
             }
         }
 
