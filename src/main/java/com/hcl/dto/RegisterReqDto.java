@@ -31,8 +31,12 @@ public class RegisterReqDto {
 
 	private String name;
 
-	@NotEmpty(message = "*Please provide your last name")
+	@NotEmpty(message = "*Please provide your phone number")
 
-	private String lastName;
+	private String phone;
+	@NotEmpty(message = "*Please provide your adhar number")
+	private String adarId;
+	@NotEmpty(message = "*Please provide your address")
+	private String address;
 
 }
