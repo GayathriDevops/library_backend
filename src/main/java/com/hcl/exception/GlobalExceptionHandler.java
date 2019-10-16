@@ -29,4 +29,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(responseDto, HttpStatus.UNAUTHORIZED);
 
 	}
+	
+
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<ResponseDto> DataNotFoundExceptionExceptionHandler(DataNotFoundException ex,
+			WebRequest request) {
+		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.FOUND.value())
+				.build();
+		return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
+
+	}
+	
+	
 }

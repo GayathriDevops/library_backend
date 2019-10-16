@@ -1,19 +1,20 @@
 package com.hcl.dto;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto {
-	private int statusCode;
-	private String message;
+public class ViewBookRequestDto {
+	
+	private Long userId;
 
 }
