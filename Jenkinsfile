@@ -5,8 +5,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                git url : 'https://github.com/GayathriDevops/library_backend.git'
-             if (git url.BRANCH_NAME ==~ /(dev|master)/) 
+                git url : 'https://github.com/GayathriDevops/library_backend.git, dev'
             }
         }
 
