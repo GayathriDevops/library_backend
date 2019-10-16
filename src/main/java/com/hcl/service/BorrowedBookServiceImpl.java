@@ -2,8 +2,11 @@ package com.hcl.service;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import com.hcl.repository.BorrowedBookRepository;
 
 @Service
 public class BorrowedBookServiceImpl  implements BorrowedBookService{
+	
+	private static Logger logger = LoggerFactory.getLogger(BorrowedBookServiceImpl.class);
 	@Autowired
 	BookRepository bookRepository;
 	
@@ -24,6 +29,8 @@ public class BorrowedBookServiceImpl  implements BorrowedBookService{
 	BorrowedBookRepository borrowedBookRepository;
 	@Override
 	public ViewBookResponseDto getBookByUserId(Long request) {	
+		
+   logger.info("getBookByUserId() in  BorrowedBookServiceImpl started");
 	ViewBookResponseDto response= new ViewBookResponseDto();
     List<Long> borrowedBookId=borrowedBookRepository.getBookByUserId(request);
 	List<BookDetails> detailList= new ArrayList<BookDetails>();
