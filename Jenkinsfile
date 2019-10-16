@@ -6,9 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 git url : 'https://github.com/GayathriDevops/library_backend.git'
-                environment {
-                    BRANCH_NAME = '*/dev'
-                }
+                branches: [[name: "${dev.branch}"]],
             }
         }
 
