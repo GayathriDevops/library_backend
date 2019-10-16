@@ -17,11 +17,14 @@ import com.hcl.dto.LoginReqDto;
 import com.hcl.dto.LoginResDto;
 import com.hcl.dto.RegisterReqDto;
 import com.hcl.dto.ResponseDto;
+import com.hcl.entity.Book;
 import com.hcl.entity.BorrowedBook;
 import com.hcl.entity.RequestedBook;
 import com.hcl.entity.User;
+import com.hcl.exception.BookNotPresentException;
 import com.hcl.exception.InvalidCredentialsException;
 import com.hcl.exception.UserExitsException;
+import com.hcl.repository.BookRepository;
 import com.hcl.repository.BorrowedBookRepository;
 import com.hcl.repository.RequestedBookRepository;
 import com.hcl.repository.UserRepository;
@@ -45,6 +48,8 @@ public class UserServiceImpl implements UserService {
 	private RequestedBookRepository requestedBookRepository;
 	@Autowired
 	private BorrowedBookRepository barrowedBookRepository;
+	@Autowired
+	private BookRepository bookRepository;
 	@Autowired
 
 	public UserServiceImpl(UserRepository userRepository, 
@@ -111,12 +116,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResponseDto barrowBook(BarrowedReqDto requestDto) {
 		logger.info("UserServiceImpl::----------barrowBook()");
+		Optional<Book> book=bookRepository.findById(requestDto.getBookId());
+		if(book.isPresent()) {
+			Book books=book.get();
+			books.setBookStatus(Constants.BOOROWED);
+			bookRepository.save(books);
 		BorrowedBook borrow=new BorrowedBook();
 		BeanUtils.copyProperties(requestDto, borrow);
 		barrowedBookRepository.save(borrow);
 		ResponseDto response = ResponseDto.builder().message(Constants.BOOROWED_BOOK)
 				.statusCode(Constants.CREATED).build();
-		return response;
+		return response;}
+		else throw new BookNotPresentException(Constants.BOOK_NOT_PRESENT);
+		
 	}
 	/**
 	 * saving barrowed book in the requestedBook table with userId and bookId 

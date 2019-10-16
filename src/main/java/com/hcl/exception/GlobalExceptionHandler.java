@@ -29,4 +29,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(responseDto, HttpStatus.UNAUTHORIZED);
 
 	}
+	@ExceptionHandler(BookNotPresentException.class)
+	public ResponseEntity<ResponseDto> EmployeeNotFoundExceptionExceptionHandler(BookNotPresentException ex,
+			WebRequest request) {
+		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.NOT_FOUND.value())
+				.build();
+		return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
+
+	}
 }
