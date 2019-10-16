@@ -1,16 +1,16 @@
 pipeline {
     agent any
-     parameters {
-        string(defaultValue: 'master', description: 'branch', name: 'GIT_BRANCH')
-    }
-    stages {
+//     parameters {
+//        string(defaultValue: 'master', description: 'branch', name: 'GIT_BRANCH')
+//    }
+//    stages {
         /* "Build" and "Test" stages omitted */
 
-        stage('Build') {
-            steps {
-               git branch: "${dev.GIT_BRANCH}", git url : 'https://github.com/GayathriDevops/library_backend.git'
-            }
-        }
+//        stage('Build') {
+//            steps {
+//               git branch: "${dev.GIT_BRANCH}", url : 'https://github.com/GayathriDevops/library_backend.git'
+//            }
+//        }
 
 
         stage('maven_goals_and_options') {
