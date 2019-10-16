@@ -29,7 +29,7 @@ public class RegisterReqDto {
 
 	@NotEmpty(message = "*Please provide your name")
 
-	private String name;
+	private String userName;
 
 	@NotEmpty(message = "*Please provide your phone number")
 
