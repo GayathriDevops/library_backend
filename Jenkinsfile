@@ -1,14 +1,11 @@
 pipeline {
     agent any
-     parameters {
-       string(defaultValue: 'master', description: 'branch', name: 'GIT_BRANCH')
-    }
     stages {
         /* "Build" and "Test" stages omitted */
 
         stage('Build') {
             steps {
-               git branch: "${params.dev}", url : 'https://github.com/GayathriDevops/library_backend.git'
+            git url : 'https://github.com/GayathriDevops/library_backend.git'
             }
         }
 
