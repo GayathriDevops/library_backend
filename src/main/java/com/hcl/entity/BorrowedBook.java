@@ -15,7 +15,7 @@ import lombok.Data;
 @Table(name = "borrowedBook")
 public class BorrowedBook {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bId;
 	private Long userId;
 	private Long bookId;

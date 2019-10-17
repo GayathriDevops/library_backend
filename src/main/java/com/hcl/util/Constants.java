@@ -8,4 +8,9 @@ public class Constants {
 	public static final String INVALID_CREDENTIALS = "Please Enter Valid Credentails";
 	public static final Integer CREATED = 201;
 	public static final Integer OK = 200;
+	public static final String NO_BOOKS = "No results found";
+	public static final String ADD_BOOK = "Book is successfully added into the library";
+	public static final String BOOK_AVAILABLE = "available";
+
+
 }
