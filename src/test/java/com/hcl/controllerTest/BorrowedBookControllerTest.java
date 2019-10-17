@@ -12,8 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.hcl.controller.BookController;
+import com.hcl.controller.ViewBookController;
 import com.hcl.dto.BookDetails;
 import com.hcl.dto.ViewBookResponseDto;
 import com.hcl.service.BorrowedBookServiceImpl;
@@ -23,7 +22,7 @@ public class BorrowedBookControllerTest {
 
 	
 	@InjectMocks
-	BookController bookController;
+	ViewBookController bookController;
 	
 	@Mock
 	BorrowedBookServiceImpl borrowBookService;

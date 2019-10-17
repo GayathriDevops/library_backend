@@ -21,16 +21,16 @@ import com.hcl.service.BorrowedBookService;
 @RestController
 @RequestMapping("/book")
 @CrossOrigin(allowedHeaders = { "*", "/" }, origins = { "*", "/" })
-public class BookController {
+public class ViewBookController {
 	
-    private static Logger logger = LoggerFactory.getLogger(BookController.class);
+    private static Logger logger = LoggerFactory.getLogger(ViewBookController.class);
 	@Autowired
 	BorrowedBookService borrowedBookService;
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<ViewBookResponseDto> getBookByUserId(@PathVariable("userId") Long request)
 	{
-		logger.info("getBookByUserId() in  BookController started");
+		logger.info("getBookByUserId() in  ViewBookController started");
 		return new ResponseEntity<>(borrowedBookService.getBookByUserId(request),HttpStatus.OK);
 	}
 
