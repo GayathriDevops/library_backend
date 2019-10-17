@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.dto.AddBookDTO;
 import com.hcl.dto.AddBookResponse;
 import com.hcl.dto.BookResponseDTO;
+import com.hcl.dto.SearchResponse;
 import com.hcl.service.BookService;
+import com.hcl.util.Constants;
 
 /**
  * 
@@ -46,9 +50,15 @@ public class BookController {
 	 * @return List<BookResponseDTO>
 	 */
 	@GetMapping("/{searchVariable}")
-	public List<BookResponseDTO> searchBooks(@PathVariable String searchVariable) {
+	public ResponseEntity<SearchResponse> searchBooks(@PathVariable String searchVariable) {
+		
 		LOGGER.info("Enter into BookController::-----searchBooks()");
-		return bookService.searchBooks(searchVariable);
+		
+		List<BookResponseDTO> searchBooks = bookService.searchBooks(searchVariable);
+		SearchResponse response = new SearchResponse();
+		response.setBookResponse(searchBooks);
+		
+		return new ResponseEntity<SearchResponse>(response,HttpStatus.OK);
 
 	}
 	
@@ -58,9 +68,16 @@ public class BookController {
 	 * @return AddBookResponse
 	 */
 	@PostMapping("/")
-	public AddBookResponse addBook(@RequestBody AddBookDTO addBookDTO) {
+	public ResponseEntity<AddBookResponse> addBook(@RequestBody AddBookDTO addBookDTO) {
 		LOGGER.info("Enter into BookController::-----addBooks()");
-		return bookService.addBooks(addBookDTO);
+		
+		bookService.addBooks(addBookDTO);
+		
+		AddBookResponse response = new AddBookResponse();
+		response.setStatusCode(Constants.CREATED);
+		response.setStatusMessage(Constants.ADD_BOOK);
+
+		return new ResponseEntity<AddBookResponse>(response,HttpStatus.CREATED);
 
 	}
 

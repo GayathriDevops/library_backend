@@ -16,10 +16,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.BeanUtils;
 
 import com.hcl.dto.AddBookDTO;
-import com.hcl.dto.AddBookResponse;
 import com.hcl.dto.BookResponseDTO;
 import com.hcl.entity.Book;
 import com.hcl.repository.BookRepository;
+import com.hcl.util.Constants;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class BookServiceImplTest {
@@ -37,12 +37,19 @@ public class BookServiceImplTest {
 		addBookDTO.setAuthorName("abc");
 		addBookDTO.setBookName("ab");
 		addBookDTO.setGenre("fiction");
+		
+		Book book = new Book();
+		book.setAuthorName("abc");
+		book.setBookName("ab");
+		book.setGenre("fiction");
+		book.setRating(4.5F);
+		book.setBookStatus(Constants.BOOK_AVAILABLE);
 
-		Mockito.when(bookRepository.save(Mockito.any())).thenReturn(null);
+		Mockito.when(bookRepository.save(Mockito.any())).thenReturn(book);
 
-		AddBookResponse result = BookServiceImpl.addBooks(addBookDTO);
+		Book result = BookServiceImpl.addBooks(addBookDTO);
 		assertNotNull(result);
-		assertEquals("Book is successfully added into the library", result.getStatusMessage());
+		assertEquals("ab", result.getBookName());
 	}
 
 	@Test

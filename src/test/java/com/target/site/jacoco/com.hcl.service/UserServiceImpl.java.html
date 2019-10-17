@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HclLibrary</a> &gt; <a href="index.source.html" class="el_package">com.hcl.service</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.hcl.service;
+
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.hcl.controller.UserController;
+import com.hcl.dto.BarrowedReqDto;
+import com.hcl.dto.LoginReqDto;
+import com.hcl.dto.LoginResDto;
+import com.hcl.dto.RegisterReqDto;
+import com.hcl.dto.ResponseDto;
+import com.hcl.entity.Book;
+import com.hcl.entity.BorrowedBook;
+import com.hcl.entity.RequestedBook;
+import com.hcl.entity.User;
+import com.hcl.exception.BookNotPresentException;
+import com.hcl.exception.InvalidCredentialsException;
+import com.hcl.exception.UserExitsException;
+import com.hcl.repository.BookRepository;
+import com.hcl.repository.BorrowedBookRepository;
+import com.hcl.repository.RequestedBookRepository;
+import com.hcl.repository.UserRepository;
+import com.hcl.util.Constants;
+/**
+ * 
+ * @author Pradeep AJ
+ *
+ */
+
+
+@Service
+public class UserServiceImpl implements UserService {
+	
+<span class="fc" id="L42">	private static final Logger logger = LoggerFactory.getLogger(UserController.class);</span>
+
+	private UserRepository userRepository;
+
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private RequestedBookRepository requestedBookRepository;
+	@Autowired
+	private BorrowedBookRepository barrowedBookRepository;
+	@Autowired
+	private BookRepository bookRepository;
+	@Autowired
+
+	public UserServiceImpl(UserRepository userRepository, 
+<span class="fc" id="L57">			BCryptPasswordEncoder bCryptPasswordEncoder) {</span>
+
+<span class="fc" id="L59">		this.userRepository = userRepository;</span>
+<span class="fc" id="L60">   	this.bCryptPasswordEncoder = bCryptPasswordEncoder;</span>
+
+<span class="fc" id="L62">	}</span>
+	/**
+	 * method will check email already exists. If it is available throw the exception 
+	 * else save the user
+	 * @param registerReqDto- @Valid -NotNull
+	 * @return ResponseDto
+	 * @exception UserExitsException
+	 */
+
+	@Override
+	public ResponseDto createNewUser(@Valid RegisterReqDto registerReqDto) {
+<span class="nc" id="L73">		Optional&lt;User&gt; userExists = userRepository.findByEmail(registerReqDto.getEmail());</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (!userExists.isPresent()) {</span>
+<span class="nc" id="L75">			logger.info(&quot;User Not Exits&quot;);</span>
+<span class="nc" id="L76">			User user = new User();</span>
+<span class="nc" id="L77">			BeanUtils.copyProperties(registerReqDto, user);</span>
+<span class="nc" id="L78">			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));</span>
+<span class="nc" id="L79">			userRepository.save(user);</span>
+<span class="nc" id="L80">			ResponseDto response = ResponseDto.builder().message(Constants.REG_SUCCESS_MESSAGE)</span>
+<span class="nc" id="L81">					.statusCode(Constants.CREATED).build();</span>
+<span class="nc" id="L82">			return response;</span>
+		}
+<span class="nc" id="L84">		throw new UserExitsException(Constants.USER_EXISTS);</span>
+
+	}
+	/**
+	 * method will check user  with email and password  if exists login success.
+	 * else throw exception InvalidCredentialsException
+	 * @param LoginReqDto- @Valid -NotNull
+	 * @return LoginResDto
+	 * @exception InvalidCredentialsException
+	 */
+
+	@Override
+	public LoginResDto login(@Valid LoginReqDto loginReqDto) {
+<span class="nc" id="L97">		Optional&lt;User&gt; userExists = userRepository.findByEmail(loginReqDto.getEmail());</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (userExists.isPresent()) {</span>
+<span class="nc" id="L99">			logger.info(&quot;Valid User::----------={}&quot;,loginReqDto.getEmail());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (userExists.get().getEmail().equals(loginReqDto.getEmail())</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">					&amp;&amp; bCryptPasswordEncoder.matches(loginReqDto.getPassword(), userExists.get().getPassword())) {</span>
+<span class="nc" id="L102">				LoginResDto response = LoginResDto.builder().message(Constants.LOG_SUCCESS_MESSAGE)</span>
+<span class="nc" id="L103">						.statusCode(Constants.OK).userId(userExists.get().getUserId()).build();</span>
+<span class="nc" id="L104">				return response;</span>
+			}
+			
+		}
+<span class="nc" id="L108">		throw new InvalidCredentialsException(Constants.INVALID_CREDENTIALS);</span>
+	
+	}
+	/**
+	 * saving barrowed book in the borrowedBook table with userId and bookId 
+	 * @param requestDto-NotNull
+	 * @return ResponseDto
+	 */
+	
+	@Override
+	public ResponseDto barrowBook(BarrowedReqDto requestDto) {
+<span class="nc" id="L119">		logger.info(&quot;UserServiceImpl::----------barrowBook()&quot;);</span>
+<span class="nc" id="L120">		Optional&lt;Book&gt; book=bookRepository.findById(requestDto.getBookId());</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if(book.isPresent()) {</span>
+<span class="nc" id="L122">			Book books=book.get();</span>
+<span class="nc" id="L123">			books.setBookStatus(Constants.BOOROWED);</span>
+<span class="nc" id="L124">			bookRepository.save(books);</span>
+<span class="nc" id="L125">		BorrowedBook borrow=new BorrowedBook();</span>
+<span class="nc" id="L126">		BeanUtils.copyProperties(requestDto, borrow);</span>
+<span class="nc" id="L127">		barrowedBookRepository.save(borrow);</span>
+<span class="nc" id="L128">		ResponseDto response = ResponseDto.builder().message(Constants.BOOROWED_BOOK)</span>
+<span class="nc" id="L129">				.statusCode(Constants.CREATED).build();</span>
+<span class="nc" id="L130">		return response;}</span>
+<span class="nc" id="L131">		else throw new BookNotPresentException(Constants.BOOK_NOT_PRESENT);</span>
+		
+	}
+	/**
+	 * saving barrowed book in the requestedBook table with userId and bookId 
+	 * @param requestDto-NotNull
+	 * @return ResponseDto
+	 */
+	
+	@Override
+	public ResponseDto requestBook(BarrowedReqDto requestDto) {
+<span class="nc" id="L142">		logger.info(&quot;UserServiceImpl::----------requestBook()&quot;);</span>
+<span class="nc" id="L143">		RequestedBook request=new RequestedBook();</span>
+<span class="nc" id="L144">		BeanUtils.copyProperties(requestDto, request);</span>
+<span class="nc" id="L145">		requestedBookRepository.save(request);</span>
+<span class="nc" id="L146">		ResponseDto response = ResponseDto.builder().message(Constants.REQUESTED_BOOK)</span>
+<span class="nc" id="L147">				.statusCode(Constants.CREATED).build();</span>
+<span class="nc" id="L148">		return response;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

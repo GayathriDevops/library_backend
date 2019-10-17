@@ -1,9 +1,6 @@
 package com.hcl.dto;
 
-import java.time.LocalDate;
 import java.util.List;
-
-import com.hcl.dto.BookDetails.BookDetailsBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

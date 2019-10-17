@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.dto.AddBookDTO;
-import com.hcl.dto.AddBookResponse;
 import com.hcl.dto.BookResponseDTO;
 import com.hcl.entity.Book;
 import com.hcl.exception.BookNotPresentException;
@@ -67,7 +66,7 @@ public class BookServiceImpl implements BookService {
 	 * @return AddBookResponse
 	 */
 	@Override
-	public AddBookResponse addBooks(AddBookDTO addBookDTO) {
+	public Book addBooks(AddBookDTO addBookDTO) {
 		
 		LOGGER.info("addBooks()");
 		
@@ -77,12 +76,7 @@ public class BookServiceImpl implements BookService {
 		book.setGenre(addBookDTO.getGenre());
 		book.setRating(4.5F);
 		book.setBookStatus(Constants.BOOK_AVAILABLE);
-		bookRepository.save(book);
-		
-		AddBookResponse response = new AddBookResponse();
-		response.setStatusCode(Constants.CREATED);
-		response.setStatusMessage(Constants. ADD_BOOK);
-		
-		return response;
+		return bookRepository.save(book);
+	
 	}
 }
