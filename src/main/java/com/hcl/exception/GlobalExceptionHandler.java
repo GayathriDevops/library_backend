@@ -13,22 +13,22 @@ import com.hcl.dto.ResponseDto;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(BookNotPresentException.class)
-	public ResponseEntity<ResponseError> failUploadException(BookNotPresentException ex) {
+	public ResponseEntity<ResponseError> bookNotPresentException(BookNotPresentException ex) {
 		ResponseError error = new ResponseError(ex.getMessage(), HttpStatus.NOT_FOUND.value());
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(UserExitsException.class)
-	public ResponseEntity<ResponseDto> EmployeeNotFoundExceptionExceptionHandler(UserExitsException ex,
+	public ResponseEntity<ResponseDto> employeeNotFoundExceptionExceptionHandler(UserExitsException ex,
 			WebRequest request) {
 		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.FOUND.value())
 				.build();
-		return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(responseDto, HttpStatus.FOUND);
 
 	}
 
 	@ExceptionHandler(InvalidCredentialsException.class)
-	public ResponseEntity<ResponseDto> EmployeeNotFoundExceptionExceptionHandler(InvalidCredentialsException ex,
+	public ResponseEntity<ResponseDto> employeeNotFoundExceptionExceptionHandler(InvalidCredentialsException ex,
 			WebRequest request) {
 		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.UNAUTHORIZED.value())
 				.build();
@@ -38,9 +38,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 
 	@ExceptionHandler(DataNotFoundException.class)
-	public ResponseEntity<ResponseDto> DataNotFoundExceptionExceptionHandler(DataNotFoundException ex,
+	public ResponseEntity<ResponseDto> dataNotFoundExceptionExceptionHandler(DataNotFoundException ex,
 			WebRequest request) {
-		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.FOUND.value())
+		ResponseDto responseDto = ResponseDto.builder().message(ex.getMessage()).statusCode(HttpStatus.NOT_FOUND.value())
 				.build();
 		return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
 

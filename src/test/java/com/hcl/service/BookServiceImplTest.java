@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import com.hcl.dto.AddBookDTO;
 import com.hcl.dto.BookResponseDTO;
 import com.hcl.entity.Book;
+import com.hcl.exception.BookNotPresentException;
 import com.hcl.repository.BookRepository;
 import com.hcl.util.Constants;
 
@@ -79,6 +80,18 @@ public class BookServiceImplTest {
 		List<BookResponseDTO> searchBooks = BookServiceImpl.searchBooks(Mockito.anyString());
 		assertNotNull(searchBooks);
 		assertEquals(bookResponseDTO.getBookName(), searchBooks.get(0).getBookName());
+
+	}
+	
+	@Test(expected = BookNotPresentException.class)
+
+	public void BookNotPresentExceptionTest() {
+
+		Mockito.when(bookRepository.findByBookNameOrAuthorName(Mockito.anyString())).thenReturn(Optional.ofNullable(null));
+
+		List<BookResponseDTO> searchBooks = BookServiceImpl.searchBooks(Mockito.anyString());
+		assertNotNull(searchBooks);
+		assertEquals(0, searchBooks.size());
 
 	}
 }

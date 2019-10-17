@@ -58,7 +58,7 @@ public class BookController {
 		SearchResponse response = new SearchResponse();
 		response.setBookResponse(searchBooks);
 		
-		return new ResponseEntity<SearchResponse>(response,HttpStatus.OK);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 
 	}
 	
@@ -77,7 +77,7 @@ public class BookController {
 		response.setStatusCode(Constants.CREATED);
 		response.setStatusMessage(Constants.ADD_BOOK);
 
-		return new ResponseEntity<AddBookResponse>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response,HttpStatus.CREATED);
 
 	}
 

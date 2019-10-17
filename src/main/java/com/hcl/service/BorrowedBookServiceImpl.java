@@ -33,11 +33,11 @@ public class BorrowedBookServiceImpl  implements BorrowedBookService{
    logger.info("getBookByUserId() in  BorrowedBookServiceImpl started");
 	ViewBookResponseDto response= new ViewBookResponseDto();
     List<Long> borrowedBookId=borrowedBookRepository.getBookByUserId(request);
-	List<BookDetails> detailList= new ArrayList<BookDetails>();
+	List<BookDetails> detailList= new ArrayList<>();
 	
-	if( borrowedBookId.size()>0)
+	if(!borrowedBookId.isEmpty())
 	{
-		borrowedBookId.stream().forEach((bookId) -> {
+		borrowedBookId.stream().forEach(bookId -> {
 			BookDetails details= new BookDetails();
 			Book bs=bookRepository.findById(bookId).get();
 			BorrowedBook books=borrowedBookRepository.getBookDetails(bookId);
@@ -55,7 +55,7 @@ public class BorrowedBookServiceImpl  implements BorrowedBookService{
 		
 	}else
 	{
-		throw new DataNotFoundException("No Book Borrowed From Liberary...");
+		throw new DataNotFoundException("No Book Borrowed From Library...");
 	}
 	
 		return response;
