@@ -33,6 +33,13 @@ public class SchedulerServiceImpl {
 	@Autowired
 	BorrowedBookRepository borrowedBookRepository;
 	
+	
+	/**
+	 * 
+	 * scheduled every night at 1am
+	 * 			 
+	 *
+	 */
 	@Scheduled(cron = "0 */2 * * * *")
 	public void performTaskUsingCron() {
 		
@@ -44,7 +51,7 @@ public class SchedulerServiceImpl {
 		List<BorrowedBook> borrowed = borrowedBookRepository.getBorrowedBook(now);
 
 		borrowed.forEach(borrowedBook->{
-			System.out.println(borrowedBook);
+			LOGGER.info("borrowed book list----={}",borrowedBook);
 			borrowedBookRepository.delete(borrowedBook);
 			Optional<Book> books = bookRepository.findByBookId(borrowedBook.getBookId());
 		if(books.isPresent()) {

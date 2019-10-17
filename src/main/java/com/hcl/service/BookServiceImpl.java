@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookResponseDTO> searchBooks(String searchVariable) {
 
-		LOGGER.info("searchBooks()");
+		LOGGER.info("searchBooks()----{}",searchVariable);
 
 		Optional<List<Book>> bookList = bookRepository.findByBookNameOrAuthorName(searchVariable);
 
@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
 		book.setBookName(addBookDTO.getBookName());
 		book.setGenre(addBookDTO.getGenre());
 		book.setRating(4.5F);
-		book.setBookStatus("available");
+		book.setBookStatus(Constants.BOOK_AVAILABLE);
 		bookRepository.save(book);
 		
 		AddBookResponse response = new AddBookResponse();

@@ -23,6 +23,13 @@ import com.hcl.service.BookService;
  * @author Sravya U
  *
  */
+
+/**
+ * 
+ * @apiNote- search books
+ * 			 add books
+ *
+ */
 @RestController
 @RequestMapping("/books")
 @CrossOrigin(allowedHeaders = { "*", "/" }, origins = { "*", "/" })
