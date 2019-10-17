@@ -79,8 +79,9 @@ public class UserServiceImpl implements UserService {
 			ResponseDto response = ResponseDto.builder().message(Constants.REG_SUCCESS_MESSAGE)
 					.statusCode(Constants.CREATED).build();
 			return response;
-		}
+		}else {
 		throw new UserExitsException(Constants.USER_EXISTS);
+		}
 
 	}
 	/**
