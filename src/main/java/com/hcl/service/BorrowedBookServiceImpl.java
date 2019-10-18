@@ -1,10 +1,7 @@
 package com.hcl.service;
 
 import java.util.ArrayList;
-
-
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +15,13 @@ import com.hcl.exception.DataNotFoundException;
 import com.hcl.repository.BookRepository;
 import com.hcl.repository.BorrowedBookRepository;
 
+
+/*
+ *  @author Shankar K
+ *  This class used to find a particular user borrowed how many book and what are the borrowed book details 
+ *   
+*/
+
 @Service
 public class BorrowedBookServiceImpl  implements BorrowedBookService{
 	
@@ -27,6 +31,12 @@ public class BorrowedBookServiceImpl  implements BorrowedBookService{
 	
 	@Autowired
 	BorrowedBookRepository borrowedBookRepository;
+	
+    /*This getBookByUserId method is used to find a particular user borrowed how many book and what are the borrowed book details and
+	  if user Borrow any book means it will show the list of book if user not borrow any book means
+	  it will show No Book Borrowed From Library and it will return 404  */
+	
+	
 	@Override
 	public ViewBookResponseDto getBookByUserId(Long request) {	
 		

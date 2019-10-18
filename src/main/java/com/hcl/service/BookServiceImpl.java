@@ -23,6 +23,13 @@ import com.hcl.util.Constants;
  * @author Sravya U
  *
  */
+
+/**
+ * 
+ *this service implements search book
+ *and add book methods
+ *
+ */
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -35,9 +42,13 @@ public class BookServiceImpl implements BookService {
 	 * 
 	 * @param searchVariable-String
 	 * @return List<BookResponseDTO>
+	 * @exception- BookNotPresent when books are not present
 	 */
+
 	@Override
 	public List<BookResponseDTO> searchBooks(String searchVariable) {
+		
+//		Pageable paging = PageRequest.of(0, 5,Direction.DESC);
 
 		LOGGER.info("searchBooks()----{}",searchVariable);
 
@@ -64,6 +75,7 @@ public class BookServiceImpl implements BookService {
 	 * 
 	 * @param AddBookDTO
 	 * @return AddBookResponse
+	 * method for adding books and will return Book object to the controller
 	 */
 	@Override
 	public Book addBooks(AddBookDTO addBookDTO) {

@@ -30,8 +30,8 @@ import com.hcl.util.Constants;
 
 /**
  * 
- * @apiNote- search books
- * 			 add books
+ * consists method for searching books
+ * and adding books
  *
  */
 @RestController
@@ -47,7 +47,9 @@ public class BookController {
 	/**
 	 * 
 	 * @param searchVariable-String
-	 * @return List<BookResponseDTO>
+	 * @return ResponseEntity<SearchResponse>
+	 * method for searching book returns response 
+	 * 200 if books found or 404 if not found
 	 */
 	@GetMapping("/{searchVariable}")
 	public ResponseEntity<SearchResponse> searchBooks(@PathVariable String searchVariable) {
@@ -65,7 +67,9 @@ public class BookController {
 	/**
 	 * 
 	 * @param AddBookDTO
-	 * @return AddBookResponse
+	 * @return ResponseEntity<AddBookResponse>
+	 * method for adding book, returns status 
+	 * 201 if book is added
 	 */
 	@PostMapping("/")
 	public ResponseEntity<AddBookResponse> addBook(@RequestBody AddBookDTO addBookDTO) {

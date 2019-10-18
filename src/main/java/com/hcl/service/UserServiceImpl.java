@@ -77,9 +77,9 @@ public class UserServiceImpl implements UserService {
 			BeanUtils.copyProperties(registerReqDto, user);
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			userRepository.save(user);
-			ResponseDto response = ResponseDto.builder().message(Constants.REG_SUCCESS_MESSAGE)
+			return ResponseDto.builder().message(Constants.REG_SUCCESS_MESSAGE)
 					.statusCode(Constants.CREATED).build();
-			return response;
+			
 		}
 		throw new UserExitsException(Constants.USER_EXISTS);
 
@@ -99,9 +99,9 @@ public class UserServiceImpl implements UserService {
 			logger.info("Valid User::----------={}",loginReqDto.getEmail());
 			if (userExists.get().getEmail().equals(loginReqDto.getEmail())
 					&& bCryptPasswordEncoder.matches(loginReqDto.getPassword(), userExists.get().getPassword())) {
-				LoginResDto response = LoginResDto.builder().message(Constants.LOG_SUCCESS_MESSAGE)
+				return LoginResDto.builder().message(Constants.LOG_SUCCESS_MESSAGE)
 						.statusCode(Constants.OK).userId(userExists.get().getUserId()).build();
-				return response;
+			
 			}
 			
 		}
@@ -125,9 +125,9 @@ public class UserServiceImpl implements UserService {
 		BorrowedBook borrow=new BorrowedBook();
 		BeanUtils.copyProperties(requestDto, borrow);
 		barrowedBookRepository.save(borrow);
-		ResponseDto response = ResponseDto.builder().message(Constants.BOOROWED_BOOK)
+		return ResponseDto.builder().message(Constants.BOOROWED_BOOK)
 				.statusCode(Constants.CREATED).build();
-		return response;}
+		}
 		else throw new BookNotPresentException(Constants.BOOK_NOT_PRESENT);
 		
 	}
@@ -143,9 +143,9 @@ public class UserServiceImpl implements UserService {
 		RequestedBook request=new RequestedBook();
 		BeanUtils.copyProperties(requestDto, request);
 		requestedBookRepository.save(request);
-		ResponseDto response = ResponseDto.builder().message(Constants.REQUESTED_BOOK)
+		return ResponseDto.builder().message(Constants.REQUESTED_BOOK)
 				.statusCode(Constants.CREATED).build();
-		return response;
+		
 	}
 
 }

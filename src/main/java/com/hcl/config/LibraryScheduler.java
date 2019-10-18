@@ -33,6 +33,13 @@ public class LibraryScheduler {
 	@Autowired
 	BorrowedBookRepository borrowedBookRepository;
 	
+	
+	/**
+	 * 
+	 *This function is scheduled everyday at 1am
+	 *@exception - throws BookNotPresentException
+	 *when books are not present
+	 */
 	//@Scheduled(cron= "0 0 1 * * *")
 	@Scheduled(cron = "0 */2 * * * *")
 	public void performTaskUsingCron() {

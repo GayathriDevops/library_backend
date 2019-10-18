@@ -8,10 +8,22 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.hcl.dto.ResponseDto;
 
-
+/**
+ * 
+ * Globally handling exceptions using @ControllerAdvice
+ * Handles Checked and Unchecked Exception
+ *
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
+	
+	/**
+	 * 
+	 * 
+	 * @exception when books are not present
+	 *
+	 */
 	@ExceptionHandler(BookNotPresentException.class)
 	public ResponseEntity<ResponseError> bookNotPresentException(BookNotPresentException ex) {
 		ResponseError error = new ResponseError(ex.getMessage(), HttpStatus.NOT_FOUND.value());

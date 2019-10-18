@@ -30,7 +30,7 @@ public class BookServiceImplTest {
 
 	@InjectMocks
 	BookServiceImpl BookServiceImpl;
-
+	
 	@Test
 	public void testAddBook() {
 
@@ -55,6 +55,7 @@ public class BookServiceImplTest {
 
 	@Test
 	public void searchBooks() {
+		
 
 		BookResponseDTO bookResponseDTO = new BookResponseDTO();
 		bookResponseDTO.setBookName("harry");
@@ -89,7 +90,7 @@ public class BookServiceImplTest {
 
 		Mockito.when(bookRepository.findByBookNameOrAuthorName(Mockito.anyString())).thenReturn(Optional.ofNullable(null));
 
-		List<BookResponseDTO> searchBooks = BookServiceImpl.searchBooks(Mockito.anyString());
+		List<BookResponseDTO> searchBooks = BookServiceImpl.searchBooks(Mockito.any());
 		assertNotNull(searchBooks);
 		assertEquals(0, searchBooks.size());
 
