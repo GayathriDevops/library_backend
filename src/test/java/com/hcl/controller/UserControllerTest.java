@@ -21,6 +21,12 @@ import com.hcl.dto.RegisterReqDto;
 import com.hcl.dto.ResponseDto;
 import com.hcl.service.UserService;
 import com.hcl.util.Constants;
+
+/**
+ * 
+ * @author Pradeepa AJ
+ *
+ */
 @RunWith(org.mockito.junit.MockitoJUnitRunner.class)
 public class UserControllerTest {
 	@Mock

@@ -1,27 +1,19 @@
 package com.hcl.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
-
+/**
+ * @author Pradeepa AJ
+ * this class used to give Security access , validating to application
+ * extends- WebSecurityConfigurerAdapter-overriding all methods
+ * @exception -Exception-handle both rchecked and unchecked exceptions
+ *
+ */
 @Configuration
 
 @EnableWebSecurity
@@ -35,45 +27,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 			throws Exception {
 
-		
+		 // Do nothing .
 	}
+	
+	/**
+	 * Restricting  API permission based on user roles 
+	 * @param HttpSecurity
+	 * @return void
+	 */
 
 	@Override
 
 	protected void configure(HttpSecurity http) throws Exception {
 
-//		http.
-//
-//				authorizeRequests()
-
-//				.antMatchers("/").permitAll()
-//
-//				.antMatchers("/login").permitAll()
-//
-//				.antMatchers("/registration").permitAll()
-//
-//				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-//
-//				.authenticated().and().csrf().disable().formLogin()
-//
-//				.loginPage("/login").failureUrl("/login?error=true")
-//
-//				.defaultSuccessUrl("/admin/home")
-//
-//				.usernameParameter("email")
-//
-//				.passwordParameter("password")
-//
-//				.and().logout()
-//
-//				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//
-//				.logoutSuccessUrl("/").and().exceptionHandling()
-//
-//				.accessDeniedPage("/access-denied");
 		http .csrf().disable() .authorizeRequests() .anyRequest().permitAll(); 
 	}
 
+	/**
+	 * only admin can access this resources
+	 * @param-WebSecurity 
+	 * @return -void
+	 */
 	@Override
 
 	public void configure(WebSecurity web) throws Exception {

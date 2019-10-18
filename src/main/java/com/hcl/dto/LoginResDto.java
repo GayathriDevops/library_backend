@@ -1,6 +1,12 @@
 package com.hcl.dto;
 
 import lombok.Builder;
+
+/**
+ * 
+ * @author Pradeepa AJ
+ *
+ */
 import lombok.Getter;
 import lombok.Setter;
 

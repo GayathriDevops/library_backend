@@ -7,6 +7,10 @@ package com.hcl.util;
  *
  */
 public class Constants {
+	
+	private Constants() {
+		
+	}
 
 	public static final String REG_SUCCESS_MESSAGE = " Registration Successfull";
 	public static final String LOG_SUCCESS_MESSAGE = " Login Successfull";
