@@ -22,6 +22,11 @@ import com.hcl.service.UserService;
 /**
  * 
  * @author Pradeep AJ
+ *method1-createNewUser()-Check useremail is exists is not save new user into the table  
+ *method2-login()-check user exits and validate with data is true return userId
+ *method3-barrowBook()-check book is avalaible if there save data to borrowed book
+ *method4-requestBook()-saving request book
+ *
  *
  */
 @RestController
@@ -63,6 +68,12 @@ public class UserController {
 		logger.info("Enter into UserController::---------- barrowBook()");
 		return new ResponseEntity<>(userService.barrowBook(requestDto),HttpStatus.CREATED);
 	}
+	
+	/**
+	 * 
+	 * @param requestDto-NotNull
+	 * @return ResponseDto
+	 */
 	@PostMapping("/books/request")
 	public ResponseEntity<ResponseDto> requestBook(@RequestBody BarrowedReqDto requestDto){
 		logger.info("Enter into UserController::---------- requestBook()");

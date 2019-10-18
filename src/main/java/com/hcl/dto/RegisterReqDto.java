@@ -1,6 +1,5 @@
 package com.hcl.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -9,6 +8,12 @@ import org.hibernate.validator.constraints.Length;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+/**
+ * 
+ * @author Pradeepa AJ
+ *
+ */
 
 @Builder
 @Getter
